@@ -7,21 +7,42 @@
 
     <title>yo-image demo</title>
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script src="../node_modules/cropperjs/dist/cropper.js"></script>
 
-    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../yo-image.html">
-    <link rel="import" href="../../paper-dialog/paper-dialog.html">
+    <script type="module">
+      import '@polymer/iron-demo-helpers/demo-pages-shared-styles';
+      import '@polymer/iron-demo-helpers/demo-snippet';
+      import '@polymer/paper-dialog/paper-dialog';
+      import '../yo-image';
 
-    <custom-style>
+    </script>
+
+    <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+    <script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<custom-style>
         <style is="custom-style" include="demo-pages-shared-styles">
         </style>
-    </custom-style>
+    </custom-style>`;
+
+document.body.appendChild($_documentContainer.content);
+</script>
 </head>
 
 <body>
-    <div class="vertical-section-container centered">
+    <script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<div class="vertical-section-container centered">
         <h3>Basic yo-image demo</h3>
         <demo-snippet>
             <template>
@@ -35,13 +56,19 @@
                 </style>
                 <img id="result1" src="http://via.placeholder.com/250x350">
                 <yo-image target="#result1">
-                    <button confirm-crop>Confirm crop</button>
-                    <button cancel-crop>Cancel</button>
+                    <button confirm-crop="">Confirm crop</button>
+                    <button cancel-crop="">Cancel</button>
                 </yo-image>
             </template>
         </demo-snippet>
-    </div>
-    <div class="vertical-section-container centered">
+    </div>`;
+
+document.body.appendChild($_documentContainer.content);
+</script>
+    <script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<div class="vertical-section-container centered">
         <h3>Customization yo-image demo</h3>
         <demo-snippet>
             <template>
@@ -55,8 +82,8 @@
                 </style>
                 <img id="result" src="http://via.placeholder.com/250x350">
                 <yo-image id="yoimage" target="#result" maxsize="1024" uploader-label="This has a custom uplaoder label">
-                    <button confirm-crop>Confirm crop</button>
-                    <button cancel-crop>Cancel</button>
+                    <button confirm-crop="">Confirm crop</button>
+                    <button cancel-crop="">Cancel</button>
                 </yo-image>
                 <script>
                     window.addEventListener('load', e => {
@@ -64,11 +91,17 @@
                         yoImage.setFeedback('single', 'This is a custom feedback for dropping multiple files');
                         yoImage.setFeedback('tooLarge', 'This is a custom feedback for too large files');
                     })
-                </script>
+                &lt;/script>
             </template>
         </demo-snippet>
-    </div>
-    <div class="vertical-section-container centered">
+    </div>`;
+
+document.body.appendChild($_documentContainer.content);
+</script>
+    <script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<div class="vertical-section-container centered">
         <h3>Preview cropped yo-image demo</h3>
         <demo-snippet>
             <template>
@@ -106,8 +139,14 @@
                 <yo-image target="#result2" preview="#preview2"></yo-image>
             </template>
         </demo-snippet>
-    </div>
-    <div class="vertical-section-container centered">
+    </div>`;
+
+document.body.appendChild($_documentContainer.content);
+</script>
+    <script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<div class="vertical-section-container centered">
         <h3>Inside modal yo-image demo</h3>
         <demo-snippet>
             <template>
@@ -200,10 +239,10 @@
                             dialog.close();
                             yo.reset();
                         });
-                </script>
+                ` + "<" + `/script>
             </template>
         </demo-snippet>
-    </div>
-</body>
+    </div>`;
 
-</html>
+document.body.appendChild($_documentContainer.content);
+</script>
